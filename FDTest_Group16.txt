@@ -1,0 +1,202 @@
+LOADMEM
+zero r0 # 0
+lw r1 r0 5   # 1 loads a[0] into r1
+lw r2 r0 6   # 2 loads a[1] into r2
+add r3 r1 r2    # 3 put a[0]+a[1] into r3
+DATAMEM # 4
+10 # 5
+-1 # 6
+CHECKMEM
+r1: 10
+r2: -1
+r3: 9
+pc: 4
+END
+LOADMEM
+zero r0 # 0 first, a zero instruction (see troubleshooting section)
+lw r1 r0 5 # 1 loads a[0] into r1
+CHECKMEM
+r1: 10
+LOADMEM
+lw r2 r0 6 # 2 loads a[1] into r2
+CHECKMEM
+r2: -1
+LOADMEM
+add r3 r1 r2 # 3 put a[0]+a[1] into r3
+DATAMEM # 4
+10 # 5
+-1 # 6
+CHECKMEM
+r3: 9
+pc: 4
+END
+LOADMEM
+zero r0
+lw r1 r0 7
+lw r2 r0 8
+sub r3 r1 r2
+lw r4  r0 9
+eq r5 r4 r3 
+DATAMEM # 6
+1100 # 7
+76 # 8
+1024 # 9
+CHECKMEM
+r1: 1100
+r2: 76
+r3: 1024
+r4: 1024
+r5: 1
+END
+LOADMEM
+zero r0
+lw r1 r0 8
+lw r2 r0 9
+add r3 r1 r2
+lw r4 r3 0
+sw r4 r4 11
+lw r5 r4 11
+DATAMEM #7
+4
+6
+1000
+CHECKMEM
+r1: 4
+r2: 6
+r3: 10
+r4: 1000
+r5: 1000
+END
+LOADMEM
+zero r0
+lw r1 r0 10
+lw r2 r0 11
+bne r1 r2 1
+lw r5 r0 12
+add r3 r1 r2
+lw r4 r0 13
+bne r3 r4 1
+lw r6 r0 14
+DATAMEM #9
+15 
+10
+30	#12
+25
+1000
+CHECKMEM
+r1: 15
+r2: 10
+r5: 0
+r3: 25
+r4: 25
+r6: 1000
+END
+LOADMEM
+zero r0
+lw r1 r0 4
+ori r1 16
+DATAMEM #3
+15
+CHECKMEM
+r1: 31
+END
+LOADMEM
+zero r0
+lw r1 r0 4
+lui r1 2
+DATAMEM #3
+5
+CHECKMEM
+r1: 128
+END
+LOADMEM
+zero r0
+lw r1 r0 9
+jr r1 5
+lw r2 r0 10
+lw r3 r0 11
+lw r4 r0 12
+lw r5 r0 13
+zero r0 
+DATAMEM #8
+1
+2
+3
+4
+5
+CHECKMEM
+r1: 1
+r2: 0
+r3: 0
+r4: 0
+r5: 5
+END
+LOADMEM
+zero r0
+jal 4
+lw r1 r0 6
+lw r2 r0 7
+lw r3 r0 8
+DATAMEM #5
+1
+2
+3
+CHECKMEM
+r1: 0
+r2: 0
+r3: 3
+r15: 2
+END
+LOADMEM
+zero r0
+lui r1 16
+ori r1 16
+DATAMEM
+CHECKMEM
+r1: 1040
+END
+LOADMEM
+zero r0
+add r1 r0 r15
+jal 4
+zero r0
+add r15 r0 r1
+DATAMEM
+CHECKMEM
+END
+LOADMEM
+zero r0
+lw r1 r0 9
+lw r2 r0 10
+gt r4 r1 r2
+eq r5 r1 r2
+or r6 r4 r5
+bne r6 r0 1
+lw r7 r0 11
+DATAMEM #8
+3
+2
+3
+CHECKMEM
+r7: 0
+END
+LOADMEM
+zero r0
+lw r1 r0 9
+lw r2 r0 10
+gt r4 r1 r2
+eq r5 r1 r2
+or r6 r4 r5
+bne r6 r0 1
+lw r7 r0 11
+DATAMEM #8
+1
+2
+3
+CHECKMEM
+r7: 3
+
+
+
+
+

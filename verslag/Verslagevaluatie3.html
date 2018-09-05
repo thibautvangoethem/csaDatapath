@@ -1,0 +1,74 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-15">
+<title>Verslag</title>
+<!-- Het "u" element (underline) is geherdefinieerd voor overline -->
+<style type="text/css">u {text-decoration: overline;}</style>
+
+</head>
+
+<body>
+
+<h1>Verslag</h1>
+<p><b>Titel:</b> <i>Project 6-7</i></p>
+<p>Dit verslag werd opgesteld door:<br>
+</p><ul>
+<li><b>Naam:</b> <i>De Clerck Wouter</i><br>
+<b>Studentennummer:</b> <i>20143388</i><br>
+<b>Email adres:</b> <i>wouter.declerck2@student.uantwerpen.be</i>
+</li>
+<li><b>Naam:</b> <i>Thibaut Van Goethem</i><br>
+<b>Studentennummer:</b> <i>20141259</i><br>
+<b>Email adres:</b> <i>Thibaut.Van Goethem@student.uantwerpen.be</i>
+</ul>
+<b>Aantal man-uren besteed:</b> <i>14 uur</i><br>
+<b>Moeilijkheidsgraad:</b> <i>7</i> /10 (1 is heel makkelijk, 10 is heel moeilijk)<p></p>
+
+<h2>Inhoud van de oplossing</h2>
+<h3>De control unit:</h3>
+<p>De input van de control unit is een 16 bit instruction die dan wordt vergeleken met verschillende waardes. Eerst worden de 4 laatste bits vergeleken om te zien of de instructie 'sw' of 'lw of 'bne' of gelijk is aan '1111'. Als de laatste 4 bits geen van deze dingen zijn wordt er verder niets met gedaan. Als de laatste 4 bits 'sw' voorstellen dan mag er niet geschreven naar het register maar dan moet er wel gestored worden in Ram. Als het load word is dan moet er geload worden naar Ram. Als de operation store word of load word is, dan moet er data kunnen worden doorgegeven worden naar het Ramelement, de oplossing hier voor is een output die enkel op 1 staat als het 1 van deze operaties is. Deze output gaat dan naar een multiplexer die als selector werkt. Branch not equal zorgt er voor dat er niet geschreven wordt naar het register. Als de laatste 4 bits gelijk is aan '1111' dan wordt er gekeken naar de eerste 2 bits. Zo wordt er een onderscheidt gemaakt tussen de operaties 'ori' , ' lui, 'jr, of 'jal'. Door gebruik de maken van OR-poorten wordt er gekeken welke operaties er moet gebeuren en wat er welke dingen er voor nodig zijn. De outputs van de constructies worden gebruikt als selector van multiplexer om bv te kiezen met welke waarde er een operatie moet gebeuren. Het immidiate blok er verwerkt in de control unit. De writeto geeft weer naar waar het geschreven moet worden. Dan readfromrs geeft weer van waar rs moet gelezen worden. readfromrt geeft weer van waar rt moet gelezen worden. 12-immidaite is de 12-bit immidaite en 4-bit is de 4bit versie er van.</p>
+
+<h3>exceptions</h3>
+<br>Voor de exceptions te maken hebben we de lijn van de overflow in de alu naar de linkerkant van het datapath gebracht, Hier hebben we door de hulp van een flip-flop ervoor gezorgd dat de halt aan bleef staan wanneer er een keer overflow is.
+<br>Dan hebben we gewoon de output van deze D-flip-flop via een or verbonden met het reeds bestaande halt mechanisme
+<br>Dit is natuurlijk een heel simpele manier om exceptons te doen. Als we geavanceerdere excepties willen moeten we eerst pipelining hebben en dat hebben we hier niet
+
+<h3>pseudo instructies</h3>
+We hebben de pseudo instructies als volgt vertaalt, bij de eerste zijn we een beetje verward omdat deze instructie 20 bits blijkt te gebruiken: 4 voor op-code, 4 voor register en 12 voor de immediate?
+<br>li r1, imm
+<br>=
+<br>lui r1, imm
+<br>ori r1, r1, imm
+<br>
+<br>j imm
+<br>=
+<br>add r1 r0 r15
+<br>jal imm
+<br>#op plaats van immediate
+<br>add r15 r0 r0
+<br>
+<br>bgte r1, r2, imm
+<br>=
+<br>gt r4, r1, r2
+<br>eq r5, r1, r2
+<br>or r6, r4, r5
+<br>bne r6, r0,imm
+<br>Deze zijn vanchter getest in <a href="./FDTest_Group16.txt">FDTest_group16.txt</a>
+
+<h3>testprogramma's</h3>
+<br>fibbonaci:
+<br>Het fibbonaci programma is de eerste test in <a href="./FDTest_Group16_opdracht3.txt">FDTest_group16_opdracht3.txt</a>
+<br>hierbij worden de nummer berekent met r1 en r2
+<br>De counter wordt bjgehouden in r4 en het getal 1 wordt bijgehouden in r3
+<br>De counter start bij getal 13 zodat het de huidige instructies niet overschrijft wanneer je het fibbonaci getal in het ram geheugen stored
+<br>uiteindelij stop het programma bij nummer 2584 omdat het volgende nummer een exceptie overflow genereert
+<br>
+<br>Binary search:
+<br>Bij deze opgave gaat het in het voorbeeld 5 zoeken in een array van size 5, De uitkomstindex komt in r4
+
+
+
+
+
+
+
+</body></html>

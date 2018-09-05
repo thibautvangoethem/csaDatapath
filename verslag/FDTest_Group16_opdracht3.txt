@@ -1,0 +1,63 @@
+#fbbonaci
+LOADMEM
+zero  r0
+lw r3 r0 13
+lw r1 r0 13
+lw r2 r0 13
+lw r4 r0 14
+add r1 r1 r2
+add r4 r3 r4
+sw r1 r4 0
+add r2 r1 r2
+add r4 r3 r4
+sw r2 r4 0
+jal 5
+DATAMEM # 12
+1
+13
+END #Stopt bij het getal 2584 door overflow
+
+#binary search
+LOADMEM
+zero r0
+ori r13 25
+lw r1 r13 1	#size
+lw r2 r13 2	#1
+lw r3 r13 5	#startindex
+lw r14 r13 5 	#dit zoek je
+sla r4 r1
+add r4 r4 r3	#in r4 gaat de mogelijk index terechtkomen
+lw r5 r4 0
+eq r7 r14 r5	#test of het gelijk is
+bne r7 r0 4	
+gt r7 r14 r5	#test of het kleiner is
+bne r7 r0 3
+lt r7 r14 r5	#test of het groter is
+bne r7 r0 5
+jal 25	#springt naar het einde
+sla r1 r1
+add r4 r1 r3
+bne r1 r0 5
+jal 8
+sla r1 r1
+add r4 r4 r1
+bne r1 r0 1
+jal 8
+lw r4 r13 4
+DATAMEM #25
+5
+1
+r
+-1
+5
+1
+3
+5
+7
+9
+CHECKMEM
+r1: 5
+r2: 1
+r3: 5
+r4: 15
+END

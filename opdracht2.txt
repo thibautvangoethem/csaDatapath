@@ -1,0 +1,26 @@
+a)
+#20 bits nodig?
+li r1, imm
+=
+lui r1, imm
+ori r1, r1, imm
+
+b)
+j imm
+=
+add r1 r0 r15
+jal imm
+#op plaats van immediate
+add r15 r0 r0
+
+
+
+c)
+bgte r1, r2, imm
+=
+gt r4, r1, r2
+eq r5, r1, r2
+or r6, r4, r5
+bne r6, r0,imm
+
+
